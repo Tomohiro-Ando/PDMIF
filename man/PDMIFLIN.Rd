@@ -35,29 +35,7 @@ This function estimates heterogeneous panel data models with interactive effects
 This function is similar version of PDMIFLING which accommodates a group structure.
 }
 \examples{
-N <- 100
-P <- 200
-
-R <- 2
-p <- 2
-
-LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-AY <- FAC\%*\%t(LAM)+matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-
-AX <- matrix(0,nrow=N*P,ncol=p)
-for(j in 1:P){
-  AX[(N*(j-1)+1):(N*j),1] <- 0.2+0.3*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-  AX[(N*(j-1)+1):(N*j),2] <- 0.5+0.5*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-}
-
-B <- (1:p)/2-1
-AB <- B\%*\%t(rep(1,len=P))
-
-for(j in 1:P){
-AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]\%*\%AB[,j]
-}
-fit <- PDMIFLIN(AX,AY,2)
+fit <- PDMIFLIN(data1X,data1Y,2)
 }
 \references{
 Ando, T. and Bai, J. (2015) Asset Pricing with a General Multifactor Structure Journal of Financial Econometrics, 13, 556-604.

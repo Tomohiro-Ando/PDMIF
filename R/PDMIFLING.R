@@ -25,35 +25,7 @@
 #' @importFrom stats lm qnorm pnorm
 #' @export
 #' @examples
-#' N <- 200
-#' NGroup <- 3
-#' Rs <- rep(2,len=NGroup)
-#' PP <- rep(200,len=NGroup)
-#' P <- sum(PP)
-#' p <- 3
-#' R <- 2
-#' 
-#' AY <- matrix(0,nrow=N,ncol=P)
-#' LAB <- sort(rep(1:NGroup,len=P))
-#' LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-#' FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-#' XG <- FAC%*%t(LAM)
-#' XL <- matrix(0,ncol=P,nrow=N)
-#' 
-#' for(i in 1:NGroup){
-#'   LAM <- matrix(rnorm(PP[i]*Rs[i],1,1),nrow=PP[i],ncol=Rs[i])
-#'   FAC <- matrix(rnorm(N*Rs[i],0,1),nrow=N,ncol=Rs[i])
-#'   X <- FAC%*%t(LAM)
-#'   XL[,(PP[i]*(i-1)+1):(PP[i]*i)] <- X
-#' }
-#' 
-#' ERR <- matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-#' AY <- XG+XL+ERR
-#' AX <- matrix(runif(p*P*N,-2,2),nrow=P*N)
-#' AB <- matrix(rnorm(p*P,4,2),ncol=P)
-#' for(j in 1:P){AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]%*%AB[,j]}
-#' 
-#' PDMIFLING(AX,AY,LAB,R,Rs)
+#' fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2))
 PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.001) 
 {
   Ngroups <- length(NLfactors)
@@ -76,9 +48,11 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
   
   Z <- AY - PredXB
   VEC <- eigen(Z %*% t(Z))$vectors
-  Fac <- sqrt(N) * (VEC)[, 1:NGfactors]
-  L <- t(t(Fac) %*% Z/N)
-  PredG <- Fac%*%t(L)
+  Ftemp <- sqrt(N) * (VEC)[, 1:NGfactors]
+  Ltemp <- t(t(Ftemp) %*% Z/N)
+  FG <- Ftemp
+  LG <- Ltemp
+  PredG <- FG%*%t(LG)
   
   Z <- AY - PredXB - PredG
   FS <- matrix(0, nrow = N, ncol = sum(NLfactors))
@@ -88,12 +62,12 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
     index <- subset(1:(P), Membership == i)
     Z <- Y[, index]
     VEC <- eigen(Z %*% t(Z))$vectors
-    Fac <- sqrt(N) * (VEC)[, 1:NLfactors[i]]
-    L <- t(t(Fac) %*% Z/N)
-    LS[index, 1:NLfactors[i]] <- L
-    if (i == 1) {FS[, 1:NLfactors[1]] <- Fac}
-    if (i != 1) {FS[, (sum(NLfactors[1:(i - 1)]) + 1):(sum(NLfactors[1:i]))] <- Fac}
-    PredL[, index] <- Fac %*% t(L)
+    Ftemp <- sqrt(N) * (VEC)[, 1:NLfactors[i]]
+    Ltemp <- t(t(Ftemp) %*% Z/N)
+    LS[index, 1:NLfactors[i]] <- Ltemp
+    if (i == 1) {FS[, 1:NLfactors[1]] <- Ftemp}
+    if (i != 1) {FS[, (sum(NLfactors[1:(i - 1)]) + 1):(sum(NLfactors[1:i]))] <- Ftemp}
+    PredL[, index] <- Ftemp %*% t(Ltemp)
   }
   
   for (ITE in 1:Maxit) {
@@ -109,21 +83,23 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
     
     Z <- AY - PredXB - PredL
     VEC <- eigen(Z %*% t(Z))$vectors
-    Fac <- sqrt(N) * (VEC)[, 1:NGfactors]
-    L <- t(t(Fac) %*% Z/N)
-    PredG <- Fac%*%t(L)
+    Ftemp <- sqrt(N) * (VEC)[, 1:NGfactors]
+    Ltemp <- t(t(Ftemp) %*% Z/N)
+    FG <- Ftemp
+    LG <- Ltemp
+    PredG <- FG%*%t(LG)
     
     Y <- AY - PredXB - PredG
     for (i in 1:Ngroups) {
       index <- subset(1:(P), Membership == i)
       Z <- Y[, index]
       VEC <- eigen(Z %*% t(Z))$vectors
-      Fac <- sqrt(N) * (VEC)[, 1:NLfactors[i]]
-      L <- t(t(Fac) %*% Z/N)
-      LS[index, 1:NLfactors[i]] <- L
-      if (i == 1) {FS[, 1:NLfactors[1]] <- Fac}
-      if (i != 1) {FS[, (sum(NLfactors[1:(i - 1)]) + 1):(sum(NLfactors[1:i]))] <- Fac}
-      PredL[,index] <- Fac%*%t(L)
+      Ftemp <- sqrt(N) * (VEC)[, 1:NLfactors[i]]
+      Ltemp <- t(t(Ftemp) %*% Z/N)
+      LS[index, 1:NLfactors[i]] <- Ltemp
+      if (i == 1) {FS[, 1:NLfactors[1]] <- Ftemp}
+      if (i != 1) {FS[, (sum(NLfactors[1:(i - 1)]) + 1):(sum(NLfactors[1:i]))] <- Ftemp}
+      PredL[,index] <- Ftemp%*%t(Ltemp)
     }
 
     if (mean(abs(B.old - B)) <= tol) {break}
@@ -150,8 +126,17 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }
   
-  return(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,"GlobalFactors"=Fac,
-              "GlobalLoadings"=L,"GroupFactors"=FS,"GroupLoadings"=LS,"pval"=pVal,"Se"=V))
+  cat("Call:
+PDMIFLING(X, Y, Memberships, NGfactors =",NGfactors,", NLfactors =",NLfactors,", Maxit =",Maxit,", tol =",tol,")
+  
+N =",P,", T =",N,", p =",p,"
+
+Fit includes coefficients, confidence interval, global factors, global loadings,
+    group factors, group loadings, p-values and standard errors.
+")
+  
+  invisible(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,"GlobalFactors"=FG,
+              "GlobalLoadings"=LG,"GroupFactors"=FS,"GroupLoadings"=LS,"pval"=pVal,"Se"=V))
   
   
 }

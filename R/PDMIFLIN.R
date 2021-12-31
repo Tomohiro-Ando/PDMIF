@@ -22,29 +22,7 @@
 #' @importFrom stats lm qnorm
 #' @export
 #' @examples
-#' N <- 100
-#' P <- 200
-#' 
-#' R <- 2
-#' p <- 2
-#' 
-#' LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-#' FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-#' AY <- FAC%*%t(LAM)+matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-#' 
-#' AX <- matrix(0,nrow=N*P,ncol=p)
-#' for(j in 1:P){
-#'   AX[(N*(j-1)+1):(N*j),1] <- 0.2+0.3*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-#'   AX[(N*(j-1)+1):(N*j),2] <- 0.5+0.5*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-#' }
-#' 
-#' B <- (1:p)/2-1
-#' AB <- B%*%t(rep(1,len=P))
-#' 
-#' for(j in 1:P){
-#' AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]%*%AB[,j]
-#' }
-#' fit <- PDMIFLIN(AX,AY,2)
+#' fit <- PDMIFLIN(data1X,data1Y,2)
 PDMIFLIN <- function (X, Y, Nfactors, Maxit=100, tol=0.001) 
 {
   AX <- X
@@ -114,8 +92,16 @@ PDMIFLIN <- function (X, Y, Nfactors, Maxit=100, tol=0.001)
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- lm(y~X)$fitted.values
   }
+  cat("Call:
+PDMIFLIN(X, Y, Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
-  return(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,
+N =",P,", T =",N,", p =",p,"
+
+Fit includes coefficients, confidence interval, factors, loadings,
+    expected values, p-values and standard errors.
+")
+  
+  invisible(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,
               "Factors" = Fac, "Loadings" = L, "Predict"=Predict, "pval"=pVal,"Se"=V))
   
 }

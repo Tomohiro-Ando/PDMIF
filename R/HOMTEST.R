@@ -17,27 +17,7 @@
 #' @importFrom stats lm pnorm
 #' @export
 #' @examples
-#' N <- 100
-#' P <- 200
-#' R <- 2
-#' p <- 2
-#' 
-#' LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-#' FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-#' AY <- FAC%*%t(LAM)+matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-#' AX <- matrix(0,nrow=N*P,ncol=p)
-#' 
-#' for(j in 1:P){
-#'   AX[(N*(j-1)+1):(N*j),1] <- 0.2+0.3*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-#'   AX[(N*(j-1)+1):(N*j),2] <- 0.5+0.5*AY[,j]+matrix(rnorm(N,0,1),nrow=N)
-#' }
-#' 
-#' B <- (1:p)/2-1
-#' AB <- B%*%t(rep(1,len=P))
-#' 
-#' for(j in 1:P){AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]%*%AB[,j]}
-#' 
-#' fit <- HOMTEST(AX,AY,2)
+#' fit <- HOMTEST(data1X,data1Y,2)
 HOMTEST<-function(X,Y,Nfactors,Maxit=100,tol=0.001){
 
   
@@ -123,7 +103,17 @@ HOMTEST<-function(X,Y,Nfactors,Maxit=100,tol=0.001){
 
   pval=2*pnorm(-abs(z))
   
-  return(list("Coefficients"=B,"Factors" = Fac, "Loadings" = L, "pvalue"=pval))
+  cat("Call:
+HOMTEST(X, Y, Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
+  
+N =",P,", T =",N,", p =",p,"
+
+p-value =",pval,"
+
+Fit includes coefficients, factors and loadings.
+")
+  
+  invisible(list("Coefficients"=B,"Factors" = Fac, "Loadings" = L, "pvalue"=pval))
 }
 
 

@@ -27,34 +27,7 @@
 #' @importFrom stats kmeans lm qnorm pnorm
 #' @export
 #' @examples
-#' N <- 200
-#' NGroup <- 3
-#' Rs <- rep(2,len=NGroup)
-#' PP <- rep(200,len=NGroup)
-#' P <- sum(PP)
-#' p <- 3
-#' R <- 2
-#' 
-#' AY <- matrix(0,nrow=N,ncol=P)
-#' LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-#' FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-#' XG <- FAC%*%t(LAM)
-#' XL <- matrix(0,ncol=P,nrow=N)
-#' 
-#' for(i in 1:NGroup){
-#'   LAM <- matrix(rnorm(PP[i]*Rs[i],1,1),nrow=PP[i],ncol=Rs[i])
-#'   FAC <- matrix(rnorm(N*Rs[i],0,1),nrow=N,ncol=Rs[i])
-#'   X <- FAC%*%t(LAM)
-#'   XL[,(PP[i]*(i-1)+1):(PP[i]*i)] <- X
-#' }
-#' 
-#' ERR <- matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-#' AY <- XG+XL+ERR
-#' AX <- matrix(runif(p*P*N,-2,2),nrow=P*N)
-#' AB <- matrix(rnorm(p*P,4,2),ncol=P)
-#' for(j in 1:P){AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]%*%AB[,j]}
-#' 
-#' PDMIFCLUST(AX,AY,R,Rs)
+#' fit <- PDMIFCLUST(data5X,data5Y,2,c(2,2,2))
 PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
   
   #Initialization
@@ -67,12 +40,12 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
   
   Z <- AY
   VEC <- eigen(Z %*% t(Z))$vectors
-  Fac <- sqrt(N)*(VEC)[,1:(sum(NLfactors))]
-  L <- t(t(Fac)%*%Z/N)
+  Ftemp <- sqrt(N)*(VEC)[,1:(sum(NLfactors))]
+  Ltemp <- t(t(Ftemp)%*%Z/N)
   
-  Km <- kmeans(L,Ngroups)
+  Km <- kmeans(Ltemp,Ngroups)
   LAB <- Km$cluster
-  PP <- hist(LAB,br=0:Ngroups)$counts
+  PP <- hist(LAB,br=0:Ngroups,plot=FALSE)$counts
   
   PredXB <- matrix(0,nrow=N,ncol=P)
   B <- matrix(0,nrow=p+1,ncol=P)
@@ -96,21 +69,23 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     index <- subset(1:P,LAB==i)
     Z <- Y[,index]
     VEC <- eigen(Z%*%t(Z))$vectors
-    Fac <- sqrt(N)*(VEC)[,1:NLfactors[i]]
-    L <- t(t(Fac)%*%Z/N)
-    LS[index,1:NLfactors[i]] <- L
-    if(i==1){FS[,1:NLfactors[1]] <- Fac}
-    if(i!=1){FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))] <- Fac}
-    PredL[,index] <- Fac%*%t(L)
+    Ftemp <- sqrt(N)*(VEC)[,1:NLfactors[i]]
+    Ltemp <- t(t(Ftemp)%*%Z/N)
+    LS[index,1:NLfactors[i]] <- Ltemp
+    if(i==1){FS[,1:NLfactors[1]] <- Ftemp}
+    if(i!=1){FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))] <- Ftemp}
+    PredL[,index] <- Ftemp%*%t(Ltemp)
   }
   
   #Global Factor
   
   Z <- AY-PredL-PredXB
   VEC <- eigen(Z%*%t(Z))$vectors; 
-  Fac <- (sqrt(N)*(VEC))[,1:NGfactors]
-  L <- t(t(Fac)%*%Z/N)
-  PredG <- Fac%*%t(L)
+  Ftemp <- (sqrt(N)*(VEC))[,1:NGfactors]
+  Ltemp <- t(t(Ftemp)%*%Z/N)
+  FG <- Ftemp
+  LG <- Ltemp
+  PredG <- FG%*%t(LG)
   
   
   #Estimation
@@ -145,10 +120,10 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
       
       for(i in 1:Ngroups){
         if(NLfactors[i]!=0){
-          if(i==1){Fac <- FS[,1:NLfactors[1]]}
-          if(i!=1){Fac <- FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))]}
-          L <- solve(t(Fac)%*%Fac)%*%t(Fac)%*%Y[,j]
-          Er[i] <- sum( (Y[,j]-Fac%*%L)^2 )
+          if(i==1){Ftemp <- FS[,1:NLfactors[1]]}
+          if(i!=1){Ftemp <- FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))]}
+          Ltemp <- solve(t(Ftemp)%*%Ftemp)%*%t(Ftemp)%*%Y[,j]
+          Er[i] <- sum( (Y[,j]-Ftemp%*%Ltemp)^2 )
         }
         if(NLfactors[i]==0){
           Er[i] <- sum( (Y[,j])^2 )
@@ -165,12 +140,12 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
         index <- subset(1:P,LAB==i)
         Z <- Y[,index]
         VEC <- eigen(Z%*%t(Z))$vectors
-        Fac <- sqrt(N)*(VEC)[,1:NLfactors[i]]
-        L <- t(t(Fac)%*%Z/N)
-        LS[index,1:NLfactors[i]] <- L
-        if(i==1){FS[,1:NLfactors[1]] <- Fac}
-        if(i!=1){FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))] <- Fac}
-        PredL[,index] <- Fac%*%t(L)
+        Ftemp <- sqrt(N)*(VEC)[,1:NLfactors[i]]
+        Ltemp <- t(t(Ftemp)%*%Z/N)
+        LS[index,1:NLfactors[i]] <- Ltemp
+        if(i==1){FS[,1:NLfactors[1]] <- Ftemp}
+        if(i!=1){FS[,(sum(NLfactors[1:(i-1)])+1):(sum(NLfactors[1:i]))] <- Ftemp}
+        PredL[,index] <- Ftemp%*%t(Ltemp)
       }
     }
     
@@ -179,9 +154,11 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     Z <- AY-PredL-PredXB
     
     VEC <- eigen(Z%*%t(Z))$vectors; 
-    Fac <- (sqrt(N)*(VEC))[,1:NGfactors]
-    L <- t(Fac)%*%Z/N
-    PredG <- Fac%*%L
+    Ftemp <- (sqrt(N)*(VEC))[,1:NGfactors]
+    Ltemp <- t(t(Ftemp) %*% Z/N)
+    FG <- Ftemp
+    LG <- Ltemp
+    PredG <- FG%*%t(LG)
     
     if (mean(abs(B.old - B)) <= tol) { break}
     
@@ -207,10 +184,17 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     Tstat[,i] <- sqrt(N)*(B[,i]-B0[,i])/V[,i]
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }
+  cat("Call:
+PDMIFCLUST(X, Y, NGfactors =",NGfactors,", NLfactors =",NLfactors,", Maxit =",Maxit,", tol =",tol,")
   
+N =",P,", T =",N,", p =",p,"
+
+Fit includes coefficients, confidence interval, global factors, global loadings,
+    group factors, group loadings, p-values and standard errors.
+")
   
-  return(list("Label"=LAB,"Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,"GlobalFactors"=Fac,
-              "GlobalLoadings"=L,"GroupFactors"=FS,"GroupLoadings"=LS,"pval"=pVal,"Se"=V))
+  invisible(list("Label"=LAB,"Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,"GlobalFactors"=FG,
+              "GlobalLoadings"=LG,"GroupFactors"=FS,"GroupLoadings"=LS,"pval"=pVal,"Se"=V))
 }
 
 

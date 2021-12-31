@@ -33,30 +33,6 @@ A dataframe of p-values resulting from each individual test.
 This function undergoes hypothesis testing for regression coefficients obtained from the various functions in the package.
 }
 \examples{
-N <- 400
-P <- 300
-
-R <- 3
-p <- 3
-
-LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-AY <- FAC\%*\%t(LAM)
-
-AX <- matrix(rnorm(p*P*N,0,1),nrow=P*N)
-for(j in 1:P){
-  AX[(N*(j-1)+1):(N*j),1] <- AX[(N*(j-1)+1):(N*j),1]+0.15*AY[,j]
-  AX[(N*(j-1)+1):(N*j),3] <- AX[(N*(j-1)+1):(N*j),3]-0.21*AY[,j]
-}
-
-B <- c(-1,2,-1)
-AB <- B\%*\%t(rep(1,len=P))+matrix(0.1*runif(p*P,-1,1),p,P)
-for(j in 1:P){
-  AY[,j] <- AY[,j]+(AX[(N*(j-1)+1):(N*j),])\%*\%AB[,j]
-}
-
-PROB <- exp(AY)/(1+exp(AY))
-AY <- trunc(matrix(runif(N*P,0,1),ncol=P)+PROB)
-fit <- PDMIFLOGIT(AX,AY,R)
+fit <- PDMIFLOGIT(data2X,data2Y,2)
 HYPTEST(fit$Coefficients,data.frame(c(0,1),c(-1,2)),fit$Se,"two",c(1,2),c(1,3))
 }

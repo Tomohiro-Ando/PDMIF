@@ -34,35 +34,7 @@ A list with the following components:
 Under a known group membership, this function estimates heterogeneous poisson panel data models with interactive effects.
 }
 \examples{
-N <- 400
-P <- 300
-R <- 3
-p <- 3
-
-LAM <- matrix(runif(P*R,0,1),nrow=P,ncol=R)
-FAC <- matrix(runif(N*R,0,1),nrow=N,ncol=R)
-AY <- FAC\%*\%t(LAM)
-AX <- matrix(runif(p*P*N,0,1),nrow=P*N)
-
-for(j in 1:P){
-  AX[(N*(j-1)+1):(N*j),1] <- AX[(N*(j-1)+1):(N*j),1]+0.01*AY[,j]
-  AX[(N*(j-1)+1):(N*j),3] <- AX[(N*(j-1)+1):(N*j),3]-0.01*AY[,j]
-}
-
-B <- c(-1,2,-1)
-AB <- B\%*\%t(rep(1,len=P))
-
-for(j in 1:P){
-  AY[,j] <- AY[,j]+(AX[(N*(j-1)+1):(N*j),])\%*\%AB[,j]
-}
-
-MM <- exp(AY)
-for(i in 1:N){
-for(j in 1:P){
-AY[i,j] <- rpois(1,lambda=MM[i,j])
-}}
-
-fit <- PDMIFCOUNT(AX,AY,R)
+fit <- PDMIFCOUNT(data3X,data3Y,3)
 }
 \references{
 Ando, T., Bai, J. and Li, K. (2021) Bayesian and maximum likelihood analysis of large-scale panel choice models with unobserved heterogeneity, Journal of Econometrics.

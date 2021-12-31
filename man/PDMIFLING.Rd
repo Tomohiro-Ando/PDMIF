@@ -40,35 +40,7 @@ Under a known group membership, this function estimates heterogeneous panel data
 Together with the regression coefficients, this function estimates the unobserved common factor structures both for across/within groups.
 }
 \examples{
-N <- 200
-NGroup <- 3
-Rs <- rep(2,len=NGroup)
-PP <- rep(200,len=NGroup)
-P <- sum(PP)
-p <- 3
-R <- 2
-
-AY <- matrix(0,nrow=N,ncol=P)
-LAB <- sort(rep(1:NGroup,len=P))
-LAM <- matrix(rnorm(P*R,0,1),nrow=P,ncol=R)
-FAC <- matrix(rnorm(N*R,0,1),nrow=N,ncol=R)
-XG <- FAC\%*\%t(LAM)
-XL <- matrix(0,ncol=P,nrow=N)
-
-for(i in 1:NGroup){
-  LAM <- matrix(rnorm(PP[i]*Rs[i],1,1),nrow=PP[i],ncol=Rs[i])
-  FAC <- matrix(rnorm(N*Rs[i],0,1),nrow=N,ncol=Rs[i])
-  X <- FAC\%*\%t(LAM)
-  XL[,(PP[i]*(i-1)+1):(PP[i]*i)] <- X
-}
-
-ERR <- matrix(rnorm(N*P,0,1),nrow=N,ncol=P)
-AY <- XG+XL+ERR
-AX <- matrix(runif(p*P*N,-2,2),nrow=P*N)
-AB <- matrix(rnorm(p*P,4,2),ncol=P)
-for(j in 1:P){AY[,j] <- AY[,j]+AX[(N*(j-1)+1):(N*j),]\%*\%AB[,j]}
-
-PDMIFLING(AX,AY,LAB,R,Rs)
+fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2))
 }
 \references{
 Ando, T. and Bai, J. (2015) Asset Pricing with a General Multifactor Structure Journal of Financial Econometrics, 13, 556-604.

@@ -22,47 +22,7 @@
 #' @importFrom stats qnorm
 #' @export
 #' @examples
-#' N <- 300
-#' P <- 300
-#' R <- 5
-#' p <- 8
-#' TAU <- 0.95
-#' 
-#' U <- matrix(runif(N*P,0,1),nrow=N,ncol=P)
-#' LAM <- matrix(runif(P*R,-1,1),nrow=P,ncol=R)
-#' FAC <- matrix(runif(N*R,0,2),nrow=N,ncol=R)
-#' FL <- matrix(0,nrow=N,ncol=P)
-#' 
-#' for(i in 1:N){
-#'   for(j in 1:P){
-#'     B <- LAM[j,]+0.1*U[i,j]
-#'     if(U[i,j]<=0.2){FL[i,j] <- FAC[i,1:3]%*%B[1:3]}
-#'     if(0.2<=U[i,j] && U[i,j]<=0.8){FL[i,j] <- FAC[i,1:4]%*%B[1:4]}
-#'     if(0.8<=U[i,j]){FL[i,j] <- FAC[i,1:5]%*%B[1:5]}
-#'   }
-#' }
-#' 
-#' AX <- matrix(runif(p*P*N,0,2),nrow=P*N)
-#' for(j in 1:P){
-#'   AX[(N*(j-1)+1):(N*j),1] <- AX[(N*(j-1)+1):(N*j),1]+0.01*FL[,j]
-#'   AX[(N*(j-1)+1):(N*j),3] <- AX[(N*(j-1)+1):(N*j),3]-0.01*FL[,j]
-#'   AX[(N*(j-1)+1):(N*j),5] <- AX[(N*(j-1)+1):(N*j),5]+0.02*FL[,j]
-#'   AX[(N*(j-1)+1):(N*j),6] <- AX[(N*(j-1)+1):(N*j),6]-0.02*FL[,j]
-#' }
-#' 
-#' XB <- matrix(0,nrow=N,ncol=P)
-#' for(i in 1:N){
-#'   for(j in 1:P){
-#'     X <- AX[(N*(j-1)+1):(N*j),]
-#'     B <- c(-1,1,1,-1,rep(1,len=p-4))+0.1*j/N+0.1*U[i,j]
-#'     if(U[i,j]<=0.2){XB[i,j] <- X[i,1:p]%*%B[1:p]}
-#'     if(0.2<=U[i,j] && U[i,j]<=0.8){XB[i,j] <- X[i,1:p]%*%B[1:p]}
-#'     if(0.8<=U[i,j]){XB[i,j] <- X[i,1:p]%*%B[1:p]}
-#'   }
-#' }
-#' 
-#' AY <- XB+FL+qnorm(U,0,1)
-#' fit <- PDMIFQUANTILE(AX,AY,TAU,R)
+#' fit <- PDMIFQUANTILE(data6X,data6Y,0.95,5)
 PDMIFQUANTILE <- function (X, Y, TAU, Nfactors, Maxit=100, tol=0.001) 
 {
   AY <- Y
@@ -137,8 +97,17 @@ PDMIFQUANTILE <- function (X, Y, TAU, Nfactors, Maxit=100, tol=0.001)
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- quantreg::rq(y~X,tau=TAU)$fitted.values
   }
+  cat("Call:
+PDMIFQUANTILE(X, Y, TAU =",TAU,", Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
-  return(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,
+N =",P,", T =",N,", p =",p,"
+
+Fit includes coefficients, confidence interval, factors, loadings,
+    expected values, p-values and standard errors.
+")
+  
+  
+  invisible(list("Coefficients"=B,"Lower05"=Lower05,"Upper95"=Upper95,
               "Factors"=Fac,"Loadings"=L,"Predict"=Predict,"pval"=pVal,"Se"=V))
 }
 
