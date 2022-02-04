@@ -65,7 +65,7 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
   LS <- matrix(0,nrow=P,ncol=max(NLfactors))
   PredL <- matrix(0,nrow=N,ncol=P)
   
-  for(i in 1:length(NLfactors)){
+  for(i in 1:Ngroups){
     index <- subset(1:P,LAB==i)
     Z <- Y[,index]
     VEC <- eigen(Z%*%t(Z))$vectors
@@ -91,8 +91,7 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
   #Estimation
   
   for(ITE in 1:Maxit){
-    
-    LAB.old <- LAB
+
     B.old <- B
     
     #Beta
@@ -116,7 +115,7 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     
     for(j in 1:P){
       
-      Er <- rep(10^7,len=length(NLfactors))
+      Er <- rep(10^7,len=Ngroups)
       
       for(i in 1:Ngroups){
         if(NLfactors[i]!=0){
@@ -135,7 +134,7 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     
     #Local Factors
     
-    for(i in 1:length(NLfactors)){
+    for(i in 1:Ngroups){
       if(NLfactors[i]!=0){
         index <- subset(1:P,LAB==i)
         Z <- Y[,index]
@@ -179,8 +178,8 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     X <- AX[(N*(i-1)+1):(N*i),]
     W <- cbind(1,X)
     V[,i] <- sqrt(diag(S[i]*t(W)%*%W))
-    Lower05[,i]  <- B[,i]+qnorm(0.025)*V[,i]/sqrt(N)
-    Upper95[,i]  <- B[,i]+qnorm(0.975)*V[,i]/sqrt(N)
+    Lower05[,i]  <- B[,i]+qnorm(0.05)*V[,i]/sqrt(N)
+    Upper95[,i]  <- B[,i]+qnorm(0.95)*V[,i]/sqrt(N)
     Tstat[,i] <- sqrt(N)*(B[,i]-B0[,i])/V[,i]
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }

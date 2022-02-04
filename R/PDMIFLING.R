@@ -120,8 +120,8 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
     X <- AX[(N*(i-1)+1):(N*i),]
     W <- cbind(1,X)
     V[,i] <- sqrt(diag(S[i]*t(W)%*%W))
-    Lower05[,i]  <- B[,i]+qnorm(0.025)*V[,i]/sqrt(N)
-    Upper95[,i]  <- B[,i]+qnorm(0.975)*V[,i]/sqrt(N)
+    Lower05[,i]  <- B[,i]+qnorm(0.05)*V[,i]/sqrt(N)
+    Upper95[,i]  <- B[,i]+qnorm(0.95)*V[,i]/sqrt(N)
     Tstat[,i] <- sqrt(N)*(B[,i]-B0[,i])/V[,i]
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }

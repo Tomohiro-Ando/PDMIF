@@ -3,12 +3,12 @@
 \docType{data}
 \name{data6X}
 \alias{data6X}
-\title{A synthesized input variable dataset to fit a quantile panel data model on a panel dataset.}
+\title{A synthesized input variable dataset to cluster individual units by nonlinear heterogeneous panel data models with interactive effects when the group membership is unknown}
 \format{
-A data frame with 20,000 rows and 8 columns:
+A data frame with 960,000 rows and 4 columns:
 \describe{
-\item{columns}{the eight independent variables}
-\item{rows}{each 100 rows represent the timeseries of each of the 200 individuals}
+\item{columns}{the four independent variables}
+\item{rows}{each 800 rows represent the timeseries of each of the 1200 individuals}
 ...
 }
 }
@@ -16,6 +16,6 @@ A data frame with 20,000 rows and 8 columns:
 data6X
 }
 \description{
-A synthesized input variable dataset to fit a quantile panel data model on a panel dataset.
+A synthesized input variable dataset to cluster individual units by nonlinear heterogeneous panel data models with interactive effects when the group membership is unknown
 }
 \keyword{datasets}

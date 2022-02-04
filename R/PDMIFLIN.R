@@ -87,8 +87,8 @@ PDMIFLIN <- function (X, Y, Nfactors, Maxit=100, tol=0.001)
     fit <- summary(lm(y~X))
     b <- (fit$coefficients)[1:(p+1),1]
     V[,i] <- (fit$coefficients)[1:(p+1),2]
-    Lower05[,i]  <- b+qnorm(0.025)*V[,i]
-    Upper95[,i]  <- b+qnorm(0.975)*V[,i]
+    Lower05[,i]  <- b+qnorm(0.05)*V[,i]
+    Upper95[,i]  <- b+qnorm(0.95)*V[,i]
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- lm(y~X)$fitted.values
   }

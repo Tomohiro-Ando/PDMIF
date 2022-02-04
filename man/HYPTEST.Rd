@@ -9,8 +9,8 @@ HYPTEST(
   B0,
   Se,
   test = "two",
-  individuals = seq(1, ncol(B)),
-  variables = seq(1, nrow(B))
+  variables = seq(1, nrow(B)),
+  individuals = seq(1, ncol(B))
 )
 }
 \arguments{
@@ -22,9 +22,9 @@ HYPTEST(
 
 \item{test}{A string to determine what kind of test to run ("two" for two-tailed, "right" for right-tailed and "left for left-tailed).}
 
-\item{individuals}{A list of individuals whose coefficients are to be tested. Default is all individuals in the B dataframe.}
-
 \item{variables}{A list of variables whose coefficients are to be tested. Default is all variables in the B dataframe.}
+
+\item{individuals}{A list of individuals whose coefficients are to be tested. Default is all individuals in the B dataframe.}
 }
 \value{
 A dataframe of p-values resulting from each individual test.
@@ -34,5 +34,5 @@ This function undergoes hypothesis testing for regression coefficients obtained 
 }
 \examples{
 fit <- PDMIFLOGIT(data2X,data2Y,2)
-HYPTEST(fit$Coefficients,data.frame(c(0,1),c(-1,2)),fit$Se,"two",c(1,2),c(1,3))
+HYPTEST(fit$Coefficients,data.frame(c(0,1),c(-1,2)),fit$Se,"two",c(1,3),c(1,2))
 }
