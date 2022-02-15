@@ -34,7 +34,7 @@ A list with the following components:
 Under a known group membership, this function estimates heterogeneous poisson panel data models with interactive effects.
 }
 \examples{
-fit <- PDMIFCOUNT(data3X,data3Y,3)
+fit <- PDMIFCOUNT(data3X,data3Y,3,30,0.5)
 }
 \references{
 Ando, T., Bai, J. and Li, K. (2021) Bayesian and maximum likelihood analysis of large-scale panel choice models with unobserved heterogeneity, Journal of Econometrics.

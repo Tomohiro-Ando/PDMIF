@@ -22,7 +22,7 @@
 #' @importFrom stats qnorm
 #' @export
 #' @examples
-#' fit <- PDMIFQVAR(data8Y,2,0.1,2)
+#' fit <- PDMIFQVAR(data8Y,2,0.1,2,5,0.8)
 PDMIFQVAR <- function (Y, LAG, TAU, Nfactors, Maxit=100, tol=0.001) 
 {
 

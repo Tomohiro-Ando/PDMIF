@@ -22,7 +22,7 @@
 #' @importFrom stats qnorm
 #' @export
 #' @examples
-#' fit <- PDMIFQUANTILE(data7X,data7Y,0.95,5)
+#' fit <- PDMIFQUANTILE(data7X,data7Y,0.95,2,10,0.8)
 PDMIFQUANTILE <- function (X, Y, TAU, Nfactors, Maxit=100, tol=0.001) 
 {
   AY <- Y

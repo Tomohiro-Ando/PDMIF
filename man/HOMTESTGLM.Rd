@@ -32,7 +32,7 @@ A list with the following components:
 This function tests homogeneity of the regression coefficients in heterogeneous generalized linear models with interactive effects.
 }
 \examples{
-fit <- HOMTESTGLM(data2X,data2Y,binomial(link=logit),2)
+fit <- HOMTESTGLM(data2X,data2Y,binomial(link=logit),2,10,0.5)
 }
 \references{
 Ando, T. and Bai, J. (2015) A simple new test for slope homogeneity in panel data models with interactive effects. Economics Letters, 136, 112-117.

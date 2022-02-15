@@ -40,7 +40,7 @@ Under a known group membership, this function estimates heterogeneous panel data
 Together with the regression coefficients, this function estimates the unobserved common factor structures both for across/within groups.
 }
 \examples{
-fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2))
+fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2),30,0.1)
 }
 \references{
 Ando, T. and Bai, J. (2015) Asset Pricing with a General Multifactor Structure Journal of Financial Econometrics, 13, 556-604.

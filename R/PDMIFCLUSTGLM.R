@@ -26,9 +26,9 @@
 #' @importFrom stats kmeans lm qnorm pnorm
 #' @export
 #' @examples
-#' fit <- PDMIFCLUSTGLM(data6X,data6Y,binomial(link=logit),c(2,2,2))
+#' fit <- PDMIFCLUSTGLM(data6X,data6Y,binomial(link=logit),c(1,1,1),3,0.5)
 PDMIFCLUSTGLM <- function(X, Y, FAMILY, NLfactors, Maxit=100, tol=0.001){
-
+  set.seed(1221)
   N <- nrow(Y) #length of time series
   p <- ncol(X) #number of explanatory variables
   P <- ncol(Y) #total number of individuals

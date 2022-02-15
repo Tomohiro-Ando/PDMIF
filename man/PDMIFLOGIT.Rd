@@ -34,7 +34,7 @@ A list with the following components:
 This function estimates heterogeneous logistic panel data models with interactive effects.
 }
 \examples{
-fit <- PDMIFLOGIT(data2X,data2Y,2)
+fit <- PDMIFLOGIT(data2X,data2Y,2,20,0.5)
 }
 \references{
 Ando, T., Bai, J. and Li, K. (2021) Bayesian and maximum likelihood analysis of large-scale panel choice models with unobserved heterogeneity, Journal of Econometrics.

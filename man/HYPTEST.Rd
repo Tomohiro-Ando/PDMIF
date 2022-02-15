@@ -33,6 +33,6 @@ A dataframe of p-values resulting from each individual test.
 This function undergoes hypothesis testing for regression coefficients obtained from the various functions in the package.
 }
 \examples{
-fit <- PDMIFLOGIT(data2X,data2Y,2)
+fit <- PDMIFLOGIT(data2X,data2Y,2,20,0.5)
 HYPTEST(fit$Coefficients,data.frame(c(0,1),c(-1,2)),fit$Se,"two",c(1,3),c(1,2))
 }

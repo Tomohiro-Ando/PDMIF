@@ -5,7 +5,7 @@
 \alias{data1Y}
 \title{A synthesized output variable dataset to fit a linear model on a panel dataset.}
 \format{
-A data frame with 100 rows and 200 columns:
+A data frame with 100 rows and 50 columns:
 \describe{
 \item{columns}{the individuals}
 \item{rows}{the time points in the timeseries of each individual}

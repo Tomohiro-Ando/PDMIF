@@ -11,7 +11,7 @@
 #' @importFrom stats pnorm
 #' @export
 #' @examples 
-#' fit <- PDMIFLOGIT(data2X,data2Y,2)
+#' fit <- PDMIFLOGIT(data2X,data2Y,2,20,0.5)
 #' HYPTEST(fit$Coefficients,data.frame(c(0,1),c(-1,2)),fit$Se,"two",c(1,3),c(1,2))
 HYPTEST <- function(B,B0,Se,test="two",variables=seq(1,nrow(B)),individuals=seq(1,ncol(B))){
 

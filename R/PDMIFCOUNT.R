@@ -21,7 +21,7 @@
 #' @importFrom stats glm qnorm poisson
 #' @export
 #' @examples 
-#' fit <- PDMIFCOUNT(data3X,data3Y,3)
+#' fit <- PDMIFCOUNT(data3X,data3Y,3,30,0.5)
 PDMIFCOUNT <- function(X, Y, Nfactors, Maxit=100,tol=0.001){
 
   AY <- Y

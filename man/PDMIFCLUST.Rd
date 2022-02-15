@@ -39,7 +39,7 @@ Under a pre-specified number of groups and the number of common factors, this fu
 Each of individuals in the group are subject to the group-specific unobserved common factors.
 }
 \examples{
-fit <- PDMIFCLUST(data5X,data5Y,2,c(2,2,2))
+fit <- PDMIFCLUST(data5X,data5Y,2,c(2,2,2),20,0.5)
 }
 \references{
 Ando, T. and Bai, J. (2016) Panel data models with grouped factor structure under unknown group membership Journal of Applied Econometrics, 31, 163-191.

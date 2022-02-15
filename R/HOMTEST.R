@@ -17,7 +17,7 @@
 #' @importFrom stats lm pnorm
 #' @export
 #' @examples
-#' fit <- HOMTEST(data1X,data1Y,2)
+#' fit <- HOMTEST(data1X,data1Y,2,20,0.5)
 HOMTEST<-function(X,Y,Nfactors,Maxit=100,tol=0.001){
 
   

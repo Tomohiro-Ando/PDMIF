@@ -30,7 +30,7 @@ A list with the following components:
 This function tests homogeneity of the regression coefficients in heterogeneous panel data models with interactive effects.
 }
 \examples{
-fit <- HOMTEST(data1X,data1Y,2)
+fit <- HOMTEST(data1X,data1Y,2,20,0.5)
 }
 \references{
 Ando, T. and Bai, J. (2015) A simple new test for slope homogeneity in panel data models with interactive effects. Economics Letters, 136, 112-117.

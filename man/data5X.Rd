@@ -5,10 +5,10 @@
 \alias{data5X}
 \title{A synthesized input variable dataset to cluster individuals by heterogeneous panel data models with interactive effects.}
 \format{
-A data frame with 120,000 rows and 3 columns:
+A data frame with 30,000 rows and 2 columns:
 \describe{
-\item{columns}{the three independent variables}
-\item{rows}{each 200 rows represent the timeseries of each of the 600 individuals}
+\item{columns}{the two independent variables}
+\item{rows}{each 100 rows represent the timeseries of each of the 300 individuals}
 ...
 }
 }

@@ -18,7 +18,7 @@
 #' @importFrom stats lm pnorm
 #' @export
 #' @examples
-#' fit <- HOMTESTGLM(data2X,data2Y,binomial(link=logit),2)
+#' fit <- HOMTESTGLM(data2X,data2Y,binomial(link=logit),2,10,0.5)
 HOMTESTGLM<-function(X,Y,FAMILY,Nfactors,Maxit=100,tol=0.001){
   
   
@@ -29,7 +29,7 @@ HOMTESTGLM<-function(X,Y,FAMILY,Nfactors,Maxit=100,tol=0.001){
   p <- ncol(X)
   
   
-  fit <- PDMIFGLM(AX,AY,binomial(link=logit),2)
+  fit <- PDMIFGLM(AX,AY,binomial(link=logit),2,Maxit,tol)
   B <- (fit$Coefficients)[-1,]
   L <- fit$Loadings
   Fac <- fit$Factors

@@ -36,7 +36,7 @@ A list with the following components:
 This function estimates heterogeneous panel data models with interactive effects through generalised linear models.
 }
 \examples{
-fit <- PDMIFGLM(data2X,data2Y,binomial(link=logit),2)
+fit <- PDMIFGLM(data2X,data2Y,binomial(link=logit),2,20,0.5)
 }
 \references{
 Ando, T., Bai, J. and Li, K. (2021) Bayesian and maximum likelihood analysis of large-scale panel choice models with unobserved heterogeneity, Journal of Econometrics.

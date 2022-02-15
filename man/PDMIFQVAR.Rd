@@ -36,7 +36,7 @@ A list with the following components:
 This function estimates heterogeneous quantile panel data VAR models with interactive effects.
 }
 \examples{
-fit <- PDMIFQVAR(data8Y,2,0.1,2)
+fit <- PDMIFQVAR(data8Y,2,0.1,2,5,0.8)
 }
 \references{
 Ando, T. and Bai, J. (2020) Quantile co-movement in financial markets Journal of the American Statistical Association.

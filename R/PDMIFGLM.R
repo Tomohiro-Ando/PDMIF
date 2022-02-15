@@ -22,7 +22,7 @@
 #' @importFrom stats glm qnorm
 #' @export
 #' @examples
-#' fit <- PDMIFGLM(data2X,data2Y,binomial(link=logit),2)
+#' fit <- PDMIFGLM(data2X,data2Y,binomial(link=logit),2,20,0.5)
 PDMIFGLM <- function (X, Y, FAMILY, Nfactors, Maxit=100, tol=0.001) 
 {
   AY <- Y

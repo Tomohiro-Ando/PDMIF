@@ -27,7 +27,7 @@
 #' @importFrom stats kmeans lm qnorm pnorm
 #' @export
 #' @examples
-#' fit <- PDMIFCLUST(data5X,data5Y,2,c(2,2,2))
+#' fit <- PDMIFCLUST(data5X,data5Y,2,c(2,2,2),20,0.5)
 PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
   
   #Initialization

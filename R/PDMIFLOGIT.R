@@ -21,7 +21,7 @@
 #' @importFrom stats glm qnorm binomial
 #' @export
 #' @examples 
-#' fit <- PDMIFLOGIT(data2X,data2Y,2)
+#' fit <- PDMIFLOGIT(data2X,data2Y,2,20,0.5)
 PDMIFLOGIT <- function (X, Y, Nfactors, Maxit=100, tol=0.001) 
 {
   AY <- Y

@@ -38,7 +38,7 @@ Exponential family of distributions are used
 Each of individuals in the group are subject to the group-specific unobserved common factors.
 }
 \examples{
-fit <- PDMIFCLUSTGLM(data6X,data6Y,binomial(link=logit),c(2,2,2))
+fit <- PDMIFCLUSTGLM(data6X,data6Y,binomial(link=logit),c(1,1,1),3,0.5)
 }
 \references{
 Ando, T. and Bai, J. (2016) Panel data models with grouped factor structure under unknown group membership Journal of Applied Econometrics, 31, 163-191.

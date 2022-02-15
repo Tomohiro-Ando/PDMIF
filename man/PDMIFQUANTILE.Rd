@@ -36,7 +36,7 @@ A list with the following components:
 This function estimates heterogeneous quantile panel data models with interactive effects.
 }
 \examples{
-fit <- PDMIFQUANTILE(data7X,data7Y,0.95,5)
+fit <- PDMIFQUANTILE(data7X,data7Y,0.95,2,10,0.8)
 }
 \references{
 Ando, T. and Bai, J. (2020) Quantile co-movement in financial markets Journal of the American Statistical Association.

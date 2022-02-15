@@ -25,7 +25,7 @@
 #' @importFrom stats lm qnorm pnorm
 #' @export
 #' @examples
-#' fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2))
+#' fit <- PDMIFLING(data4X,data4Y,data4LAB,2,c(2,2,2),30,0.1)
 PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.001) 
 {
   Ngroups <- length(NLfactors)
