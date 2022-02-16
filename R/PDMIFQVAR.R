@@ -107,7 +107,7 @@ if(p+Nfactors<N){
     Predict[,i] <- quantreg::rq(y~X,tau=TAU)$fitted.values
   }
 
-cat("Call:
+message("Call:
 PDMIFQVAR(Y, LAG =",LAG,", TAU =",TAU,", Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,"

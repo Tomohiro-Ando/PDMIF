@@ -103,7 +103,7 @@ HOMTEST<-function(X,Y,Nfactors,Maxit=100,tol=0.001){
 
   pval=2*pnorm(-abs(z))
   
-  cat("Call:
+  message("Call:
 HOMTEST(X, Y, Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

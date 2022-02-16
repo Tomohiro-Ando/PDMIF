@@ -183,7 +183,7 @@ PDMIFCLUST <- function(X, Y, NGfactors, NLfactors, Maxit=100, tol=0.001){
     Tstat[,i] <- sqrt(N)*(B[,i]-B0[,i])/V[,i]
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }
-  cat("Call:
+  message("Call:
 PDMIFCLUST(X, Y, NGfactors =",NGfactors,", NLfactors =",NLfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

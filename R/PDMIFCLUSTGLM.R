@@ -28,7 +28,7 @@
 #' @examples
 #' fit <- PDMIFCLUSTGLM(data6X,data6Y,binomial(link=logit),c(1,1,1),3,0.5)
 PDMIFCLUSTGLM <- function(X, Y, FAMILY, NLfactors, Maxit=100, tol=0.001){
-  set.seed(1221)
+
   N <- nrow(Y) #length of time series
   p <- ncol(X) #number of explanatory variables
   P <- ncol(Y) #total number of individuals
@@ -157,7 +157,7 @@ for(i in 1:P){
   Tstat[,i] <- sqrt(N)*(B[,i]-B0[,i])/V[,i]
   pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
 }
-cat("Call:
+message("Call:
 PDMIFCLUSTGLM(X, Y, FAMILY =",FAMILY$family,FAMILY$link,", NLfactors =",NLfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

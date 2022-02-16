@@ -94,7 +94,7 @@ PDMIFLOGIT <- function (X, Y, Nfactors, Maxit=100, tol=0.001)
     Predict[,i] <- glm(y~X,family=binomial(link=logit))$fitted.values
   }
   
-  cat("Call:
+  message("Call:
 PDMIFLOGIT(X, Y, Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

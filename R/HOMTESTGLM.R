@@ -123,7 +123,7 @@ HOMTESTGLM<-function(X,Y,FAMILY,Nfactors,Maxit=100,tol=0.001){
   
   pval=2*pnorm(-abs(z))
   
-  cat("Call:
+  message("Call:
 HOMTESTGLM(X, Y, FAMILY =",FAMILY$family,FAMILY$link,"Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

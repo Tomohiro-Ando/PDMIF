@@ -97,7 +97,7 @@ PDMIFQUANTILE <- function (X, Y, TAU, Nfactors, Maxit=100, tol=0.001)
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- quantreg::rq(y~X,tau=TAU)$fitted.values
   }
-  cat("Call:
+  message("Call:
 PDMIFQUANTILE(X, Y, TAU =",TAU,", Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

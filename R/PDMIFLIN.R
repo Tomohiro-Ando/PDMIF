@@ -92,7 +92,7 @@ PDMIFLIN <- function (X, Y, Nfactors, Maxit=100, tol=0.001)
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- lm(y~X)$fitted.values
   }
-  cat("Call:
+  message("Call:
 PDMIFLIN(X, Y, Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

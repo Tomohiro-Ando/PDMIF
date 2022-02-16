@@ -94,7 +94,7 @@ PDMIFGLM <- function (X, Y, FAMILY, Nfactors, Maxit=100, tol=0.001)
     pVal[,i] <- (fit$coefficients)[1:(p+1),4]
     Predict[,i] <- glm(y~X,family=FAMILY)$fitted.values
   }
-  cat("Call:
+  message("Call:
 PDMIFGLM(X, Y, FAMILY =",FAMILY$family,FAMILY$link,", Nfactors =",Nfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"

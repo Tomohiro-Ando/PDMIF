@@ -126,7 +126,7 @@ PDMIFLING <- function (X, Y, Membership, NGfactors, NLfactors, Maxit=100, tol=0.
     pVal[,i] <- 2*pnorm(-abs(Tstat[,i]))
   }
   
-  cat("Call:
+  message("Call:
 PDMIFLING(X, Y, Memberships, NGfactors =",NGfactors,", NLfactors =",NLfactors,", Maxit =",Maxit,", tol =",tol,")
   
 N =",P,", T =",N,", p =",p,"
