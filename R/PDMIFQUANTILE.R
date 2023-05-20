@@ -48,7 +48,7 @@ PDMIFQUANTILE <- function (X, Y, TAU, Nfactors, Maxit=100, tol=0.001)
   
   Z <- AY-PredXB
   VEC <- eigen(Z%*%t(Z))$vectors
-  Fac <- sqrt(N)*(VEC)[,1:Nfactors]
+  Fac <- matrix(sqrt(N)*(VEC)[,1:Nfactors], nrow = nrow(VEC), ncol = Nfactors)
   L <- t(solve(t(Fac)%*%Fac)%*%t(Fac)%*%Z)
   PredFL <- Fac%*%t(L)
   
